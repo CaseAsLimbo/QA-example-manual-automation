@@ -1,7 +1,7 @@
 # Примеры написанных мной моков и фикстур для подмены данных и реального взаимодействия
 ## rental-backend (сервис Цифрового проката)
 ### Пример фикстуры для создание itme-ов(вещей) для тестов
-pyton
+```python
 def items_with_different_types(dbsession):
     """Фикстура Item.
 
@@ -58,8 +58,10 @@ def user_mock(authlib_mock, authlib_user):
 def client(mocker, user_mock):
     client = TestClient(app)
     return client
+```
 ---
-### Пример мока aiohttp запросов 
+### Пример мока aiohttp запросов
+```python
 from unittest.mock import AsyncMock, MagicMock
 ...
 import pytest
@@ -139,3 +141,4 @@ def aiohttp_mock(authlib_user_id, aiohttp_response_status, achievement_id, get_u
         post_url=achive_post_url,
     )
 ...
+```
