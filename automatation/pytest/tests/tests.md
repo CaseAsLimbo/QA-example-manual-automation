@@ -1,7 +1,7 @@
 # Примеры написанных и доработанных мной тестов
 ## Сервис rating-api ("Дубинушка")
 ### Проверка логики создания комментариев
-python
+```python
 @pytest.mark.parametrize(
     'body,lecturer_n,response_status,aiohttp_response_status,achievement_id',
     [
@@ -304,10 +304,10 @@ def test_create_comment(
                 check_post_response.assert_not_awaited()
         else:
             check_post_response.assert_not_awaited()
-
+```
 ---
 ### Проверка корректности импорта комментариев из более ранней версии приложения
-python
+```python
 @pytest.mark.parametrize(
     "body, total, response_status",
     [
@@ -395,9 +395,10 @@ def test_import_comments(client, dbsession, lecturers, body, total, response_sta
             comment_from_db = Comment.query(session=dbsession).filter(Comment.uuid == comment.get("uuid")).one_or_none()
             assert comment_from_db is not None
 ---
-## rental-backed (модуль аренды вещей в приложении)
+```
+## rental-backed (модуль Цифрофого проката)
 ### Проверка корректности сортировки item-ов(вещей)
-python
+```python
 @pytest.mark.parametrize(
     "item_n, order_by, order, response_status",
     [
@@ -427,9 +428,10 @@ def test_get_items_check_order(client, items_with_different_types, item_n, order
     key = lambda x: x[check_order_by]
     compare = (lambda x, y: x >= y) if check_order == "desc" else (lambda x, y: x <= y)
     assert all(compare(key(x), key(y)) for x, y in zip(data, data[1:]))
+```
 ---
 ### Проверка правильности возвращаемых типов item-ов
-python
+```python
 @pytest.mark.parametrize(
     "item_n, order_by, order, is_available, response_status, expected_len",
     [
@@ -464,6 +466,6 @@ def test_get_items_by_various_filters(
     query = {k: v for k, v in dict_of_params.items() if v is not None}
     response = client.get(url, params=query)
     assert response.status_code == response_status
-
+```
     data = response.json()
     assert len(data) == expected_len
